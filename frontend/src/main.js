@@ -5,6 +5,10 @@ import App from './App'
 import router from './router'
 import VueSessionStorage from 'vue-sessionstorage'
 import VueLocalStorage from 'vue-localstorage'
+import Vuetify from 'vuetify'
+import 'vuetify/dist/vuetify.min.css' // Ensure you are using css-loader
+
+Vue.use(Vuetify)
 Vue.use(VueSessionStorage)
 
 Vue.use(VueLocalStorage)

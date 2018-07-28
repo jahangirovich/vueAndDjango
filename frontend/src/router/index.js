@@ -2,7 +2,9 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import HelloWorld from '@/components/HelloWorld'
 import list from '@/components/list'
-Vue.use(Router)
+import login from '@/components/Login'
+import own from '@/components/own'
+Vue.use(Router);
 
 let router =  new Router({
   routes: [
@@ -18,6 +20,22 @@ let router =  new Router({
       path:'/list',
       name:'list',
       component:list,
+      meta:{
+        requiresAuth:true
+      }
+    },
+    {
+      path:'/login',
+      name:'login',
+      component:login,
+      meta:{
+        requiresGuest:true
+      }
+    },
+    {
+      path:'/own',
+      name:'own',
+      component:own,
       meta:{
         requiresAuth:true
       }

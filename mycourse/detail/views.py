@@ -17,7 +17,6 @@ from .serializer import UserSerializer
 class UserViewSet(viewsets.ModelViewSet):
   queryset = User.objects.all()
   serializer_class = UserSerializer
-  permission_classes = [IsAuthenticated]
 
 class Migrate(viewsets.ModelViewSet):
   authentication_classes = [TokenAuthentication]
@@ -27,3 +26,7 @@ class Migrate(viewsets.ModelViewSet):
 class Tokens(viewsets.ModelViewSet):
   queryset = Token.objects.all()
   serializer_class = TokenSerializer
+
+class Comments(viewsets.ModelViewSet):
+  queryset = Comment.objects.all()
+  serializer_class = CommentSerializer

@@ -7,16 +7,22 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'password')
+        fields = ('username', 'email', 'password','id')
 
 class My(serializers.ModelSerializer):
 
     class Meta:
         model = my
-        fields = "__all__"
+        fields = ('title','text','user','image','id','username')
 
 class TokenSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Token
+        fields = "__all__"
+
+class CommentSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Comment
         fields = "__all__"
