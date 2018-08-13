@@ -47,7 +47,7 @@ export default {
       hi:[],
       no:[],
       number:'',
-      errors:''
+      errors:[]
     }
   },
   created(){
@@ -75,7 +75,7 @@ export default {
         })
           .then(
             response =>{
-              alert("succesfully created")
+              alert("succesfully created");
               this.list()
             }
           )

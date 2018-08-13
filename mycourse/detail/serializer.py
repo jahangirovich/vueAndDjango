@@ -26,3 +26,27 @@ class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
         fields = "__all__"
+
+class ProfileSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Profiles
+        fields = "__all__"
+
+class FriendSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Add
+        fields = "__all__"
+
+class TestSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Test
+        fields = "__all__"
+
+class ListSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Compare
+        fields = "__all__"

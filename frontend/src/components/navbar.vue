@@ -6,6 +6,7 @@
       dark
       temporary
       class="navigation"
+      v-bind:style="{backgroundImage:back}"
     >
        <div class="btns">
          <router-link to="/own">
@@ -15,14 +16,26 @@
            </v-btn>
          </router-link>
          <router-link to="/list">
-           <v-btn class="menu">
+           <v-btn class="btn">
              <i class="fa fa-bars"></i>
              Posts
            </v-btn>
          </router-link>
+         <router-link to="/profile">
+           <v-btn class="btn">
+             <i class="fa fa-user" aria-hidden="true"></i>
+             Profile
+           </v-btn>
+         </router-link>
+         <router-link to="/hei">
+           <v-btn class="btn">
+             <i class="fa fa-users" aria-hidden="true"></i>
+             Users
+           </v-btn>
+         </router-link>
        </div>
     </v-navigation-drawer>
-      <div class="navbar">
+      <div class="navbar" v-bind:style="{backgroundColor:color}">
         <div class="direct">
           <div class="leftside">
             <v-toolbar-side-icon class="side" @click.stop="drawer = !drawer">
@@ -32,6 +45,7 @@
         <div class="direct2">
           <span>{{ user }}</span>
           <i class="fa fa-power-off" @click="clear"></i>
+
         </div>
       </div>
   </div>
@@ -42,6 +56,7 @@
     import navbar from './navbar'
     export default {
         name: "navbar",
+        props:['color','back'],
         data(){
           return{
             show:true,
@@ -53,7 +68,6 @@
             },
             drawer:null,
             user:localStorage.getItem('username'),
-
           }
         },
         methods:{
@@ -77,7 +91,6 @@
 
 <style scoped>
   .navbar{
-    background-color: #3b4149;
     color:white;
     display: flex;
   }
@@ -131,7 +144,8 @@
     color:#3b4149;
   }
   .theme--dark .v-btn:not(.v-btn--icon):not(.v-btn--flat){
-    background-color: white;
+    background-color: rgba(249,249,249,0.1);
+    color:white
   }
   .direct{
     text-align: left;
@@ -144,7 +158,6 @@
     width: 50%;
   }
   .navigation{
-    background-image: url("https://images.unsplash.com/photo-1532601628620-654159a04cf3?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=c95bcf67d4d88918192fb5f9f00d8468&auto=format&fit=crop&w=2134&q=80");
     background-size: cover;
     align-items: center;
     justify-content: center;

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <nav-bar></nav-bar>
+    <nav-bar v-bind:color="color.backgroundColor" v-bind:back="back.backgroundImage"></nav-bar>
     <div class="addPost" v-bind:style="styles">
       <div class="into">
         <h2>Add Post</h2>
@@ -65,7 +65,7 @@
                     <div class="loader">
                     </div>
                 </div>
-                <div v-for="reality in filterBlogs" class="up">
+                <div v-for="reality in real" class="up">
                   <div class="words">
                     <h3>{{ reality.title }}</h3>
                     <p class="detail">
@@ -75,7 +75,7 @@
                       <img :src="reality.image" alt="" width="100%" height="100%">
                       <div class="absolute">
                         <i class="fa fa-thumbs-up"></i>
-                        <i class="fa fa-comment" aria-hidden="true" @click="getPost(reality.id)">{{ len }}</i>
+                        <i class="fa fa-comment" aria-hidden="true" @click="getPost(reality.id)"></i>
                       </div>
                     </div>
                   </div>
@@ -92,14 +92,21 @@
                 <div class="center">
                   <ul>
                     <li v-for="comment in filterComments">
-                      <div class="myname">
-                        <div class="username">
-                          <span>{{ comment.username }}</span>
+                      <router-link v-bind:to="{name:'detail',params:{id:comment.user}}">
+                        <div class="myname">
+                          <div class="username">
+                            <span class="images">
+                              <img :src="comment.userImage" width="40px" height="40px" alt="">
+                            </span>
+                            <span class="come">
+                              {{ comment.username }}
+                            </span>
+                          </div>
+                          <div class="text">
+                            {{ comment.text }}
+                          </div>
                         </div>
-                        <div class="text">
-                          {{ comment.text }}
-                        </div>
-                      </div>
+                      </router-link>
                     </li>
                   </ul>
                 </div>
@@ -142,6 +149,14 @@
     margin: 0 auto;
     color:#3b4149
   }
+  .username{
+    display: flex;
+  }
+  .userImage{
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+  }
   .mybtn{
     color:white;background-color: #a33737;
   }
@@ -151,6 +166,21 @@
     top:0;
     width: 100%;
     border-bottom: 1px solid #bed4dd;
+  }
+  a{
+    text-decoration: none;
+    color:#3b4149
+  }
+  .images img{
+    border-radius: 50%;
+    padding: 5px;
+  }
+  .come{
+    padding: 10px;
+    display: inline-block;
+  }
+  .images{
+    vertical-align: middle;
   }
   p{
     margin: 0 auto;
@@ -188,11 +218,14 @@
     display: flex;
   }
   .username{
-    width: 10%;
+    width: 15%;
+    display: flex;
     font-weight: bold;
   }
   .text{
-    width: 90%;
+    width: 60%;
+    margin:0 auto;
+    padding: 10px;
   }
   .myname:hover{
     background-color: #e3eff4;
@@ -223,6 +256,17 @@
   }
   .center{
     width: 100%;
+    height: 240px;
+    overflow-y: scroll;
+  }
+  .center ::-webkit-scrollbar {
+    width: 20px;
+  }
+
+  /* Track */
+  .center ::-webkit-scrollbar-track {
+      box-shadow: inset 0 0 5px grey;
+      border-radius: 10px;
   }
   .head p{
     padding: 10px;
@@ -529,6 +573,9 @@
             number:'',
             sheet:[],
             real:[],
+            color:{
+              backgroundColor:'#3b4149'
+            },
             text:'',
             commentText:'',
             postTitle:[],
@@ -546,6 +593,9 @@
             error:[],
             styles:{
               height:"0%"
+            },
+            back:{
+              backgroundImage:'url(https://images.unsplash.com/photo-1532985172586-137bb7efaaf7?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=e31e5f5ae6f103f83d055e57029944db&auto=format&fit=crop&w=2134&q=80)'
             },
             commentStyles:{
               transform:'scale(0)'
@@ -567,24 +617,17 @@
                 console.log(error.message)
               }
             );
+
         },
         computed:{
-          filterBlogs:function () {
-            return this.real.filter((reality) => {
-                return reality.title.toLowerCase().match(this.searchText)
-            })
-          },
           filterComments(){
             return this.comments.filter(
               (comment) =>{
                 if(comment.post == this.postTitle.id){
-                  this.lenof.push(comment.post);
-                  this.len = this.lenof.length;
-                  console.log(this.len);
                   return comment.text
                 }
               }
-            )
+            );
           }
         },
         methods:{
@@ -680,13 +723,19 @@
               }
             )
           },
+          deleteComment(id){
+            axios.delete(`http://localhost:8000/router/${id}/`)
+              .then(
+                this.getComments()
+              )
+          },
           getPost(id){
             axios.get(`http://localhost:8000/router/list/${id}/`)
               .then(
                 response =>{
                   this.postTitle = response.data
                   this.commentStyles.transform = "scale(1)"
-                  this.getComments()
+                  setInterval(this.getComments(),500)
                 }
               )
               .catch(
@@ -703,9 +752,10 @@
              axios.post(`http://localhost:8000/router/comments/`,
               {
                 text:this.commentText,
-                user:this.number,
+                user:localStorage.getItem('id'),
                 post:this.postTitle.id,
-                username:localStorage.getItem('username')
+                username:localStorage.getItem('username'),
+                userImage:localStorage.getItem('image')
               })
              .then(
                response =>{

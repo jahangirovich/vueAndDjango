@@ -1,6 +1,6 @@
 <template>
     <div class="all_list">
-      <nav-bar></nav-bar>
+      <nav-bar v-bind:color="color.backgroundColor" v-bind:back="back.backgroundImage"></nav-bar>
       <div class="list">
         <div class="loader" v-if="loader">
 
@@ -92,6 +92,12 @@
             error:[],
             styles:{
               height:"0%"
+            },
+            color:{
+              backgroundColor:'#6d4c59'
+            },
+            back:{
+              backgroundImage:'url(https://images.unsplash.com/photo-1533045019724-2ca66efb0306?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=8b752d0a738e4b2d1ccb4e85ae7e51c5&auto=format&fit=crop&w=2134&q=80)'
             },
             image:'',
             myimage:''

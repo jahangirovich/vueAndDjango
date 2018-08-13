@@ -30,3 +30,19 @@ class Tokens(viewsets.ModelViewSet):
 class Comments(viewsets.ModelViewSet):
   queryset = Comment.objects.all()
   serializer_class = CommentSerializer
+
+class Prof(viewsets.ModelViewSet):
+  queryset = Profiles.objects.all()
+  serializer_class = ProfileSerializer
+
+class Friends(viewsets.ModelViewSet):
+  queryset = Add.objects.all()
+  serializer_class = FriendSerializer
+
+class Test(viewsets.ModelViewSet):
+  queryset = Test.objects.all()
+  serializer_class = TestSerializer
+
+class List(viewsets.ModelViewSet):
+  queryset = Compare.objects.all()
+  serializer_class = ListSerializer

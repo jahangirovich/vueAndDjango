@@ -4,6 +4,11 @@ import HelloWorld from '@/components/HelloWorld'
 import list from '@/components/list'
 import login from '@/components/Login'
 import own from '@/components/own'
+import profile from '@/components/profile'
+import detail from '@/components/detail'
+import user from '@/components/users'
+import call from '@/components/call'
+
 Vue.use(Router);
 
 let router =  new Router({
@@ -39,7 +44,39 @@ let router =  new Router({
       meta:{
         requiresAuth:true
       }
-    }
+    },
+    {
+      path:'/profile',
+      name:'profile',
+      component:profile,
+      meta:{
+        requiresAuth:true
+      }
+    },
+    {
+      path:'/hei',
+      name:'users',
+      component:user,
+      meta:{
+        requiresAuth:true
+      }
+    },
+    {
+      path:'/:username',
+      name:'call',
+      component:call,
+      meta:{
+        requiresAuth:true
+      }
+    },
+    {
+      path:'/:id',
+      name:'detail',
+      component:detail,
+      meta:{
+        requiresAuth:true
+      }
+    },
   ]
 })
 
